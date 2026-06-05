@@ -45,7 +45,7 @@
     cursor: none;
   }
 
-  /* CUSTOM CURSOR */
+  /* CURSOR CUSTOMIZADO */
   .cursor {
     position: fixed;
     width: 10px; height: 10px;
@@ -159,6 +159,40 @@
       linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
     background-size: 80px 80px;
     mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
+  }
+
+  /* PARTICLE CANVAS */
+  #particleCanvas {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.7;
+  }
+
+  /* LUZ QUE SEGUE O MOUSE */
+  #mouseLight {
+    position: fixed;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(41,121,255,0.07) 0%, transparent 70%);
+    transition: opacity 0.5s;
+  }
+
+  /* TRAJETO CURSOR */
+  .cursor-trail {
+    position: fixed;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9997;
+    transform: translate(-50%, -50%);
+    background: var(--blue);
+    opacity: 0;
+    transition: opacity 0.05s;
   }
 
   .hero-left {
@@ -374,7 +408,7 @@
     letter-spacing: 1px;
   }
 
-  /* SERVICES GRID */
+  /* SERVICOS */
   .services-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -672,7 +706,7 @@
   }
   .seg-right {
     justify-content: flex-start;
-    padding-top: 38px; /* alinha com "Problemas comuns" no lado esquerdo */
+    padding-top: 38px; 
   }
   .seg-problems, .seg-solutions {
     flex: 1;
@@ -828,7 +862,7 @@
     line-height: 1.7;
   }
 
-  /* CTA SECTION */
+  /* CTA */
   .cta-section {
     padding: 120px 60px;
     background: transparent;
@@ -903,7 +937,6 @@
   }
   .footer-links a:hover { color: var(--white); }
 
-  /* ANIMATIONS */
   @keyframes fadeUp {
     from { opacity: 0; transform: translateY(30px); }
     to { opacity: 1; transform: translateY(0); }
@@ -923,6 +956,121 @@
   @keyframes marquee {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
+  }
+
+  /* GLITCH TITULO */
+  @keyframes glitch-skew {
+    0%   { transform: skewX(0deg); }
+    2%   { transform: skewX(-3deg); }
+    4%   { transform: skewX(3deg); }
+    6%   { transform: skewX(0deg); }
+    98%  { transform: skewX(0deg); }
+    100% { transform: skewX(0deg); }
+  }
+  @keyframes glitch-clip1 {
+    0%, 100% { clip-path: inset(0 0 100% 0); opacity: 0; }
+    3%  { clip-path: inset(15% 0 60% 0); opacity: 0.8; transform: translate(-4px, 2px); }
+    6%  { clip-path: inset(50% 0 20% 0); opacity: 0.6; transform: translate(4px, -2px); }
+    9%  { clip-path: inset(0 0 100% 0); opacity: 0; }
+  }
+  @keyframes glitch-clip2 {
+    0%, 100% { clip-path: inset(0 0 100% 0); opacity: 0; }
+    4%  { clip-path: inset(60% 0 10% 0); opacity: 0.7; transform: translate(3px, 1px); }
+    7%  { clip-path: inset(20% 0 55% 0); opacity: 0.5; transform: translate(-3px, -1px); }
+    10% { clip-path: inset(0 0 100% 0); opacity: 0; }
+  }
+  @keyframes scanline {
+    from { transform: translateY(-100%); }
+    to   { transform: translateY(100vh); }
+  }
+  @keyframes aurora {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  @keyframes orb-drift {
+    0%   { transform: translate(0px, 0px) scale(1); }
+    33%  { transform: translate(30px, -20px) scale(1.05); }
+    66%  { transform: translate(-20px, 15px) scale(0.95); }
+    100% { transform: translate(0px, 0px) scale(1); }
+  }
+  @keyframes orb-drift-rev {
+    0%   { transform: translate(0px, 0px) scale(1.02); }
+    33%  { transform: translate(-25px, 18px) scale(0.97); }
+    66%  { transform: translate(20px, -12px) scale(1.04); }
+    100% { transform: translate(0px, 0px) scale(1.02); }
+  }
+
+  /* HERO GLITCH TITULO */
+  .hero-h1 {
+    position: relative;
+  }
+  .hero-h1::before,
+  .hero-h1::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    font-family: var(--font-display);
+    font-size: inherit;
+    line-height: inherit;
+    letter-spacing: inherit;
+    color: var(--white);
+    pointer-events: none;
+  }
+  .hero-h1::before {
+    color: #2979FF;
+    animation: glitch-clip1 8s steps(1) infinite;
+    mix-blend-mode: screen;
+  }
+  .hero-h1::after {
+    color: #82B1FF;
+    animation: glitch-clip2 8s steps(1) infinite;
+    mix-blend-mode: screen;
+  }
+
+  /* FLOATING ORB BLOBS HEHE */
+  .bg-orbs {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    overflow: hidden;
+  }
+  .bg-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+  }
+  .bg-orb-1 {
+    width: 600px; height: 600px;
+    top: -150px; left: -100px;
+    background: radial-gradient(circle, rgba(41,121,255,0.10) 0%, transparent 70%);
+    animation: orb-drift 18s ease-in-out infinite;
+  }
+  .bg-orb-2 {
+    width: 500px; height: 500px;
+    bottom: -100px; right: -80px;
+    background: radial-gradient(circle, rgba(130,177,255,0.08) 0%, transparent 70%);
+    animation: orb-drift-rev 22s ease-in-out infinite;
+  }
+  .bg-orb-3 {
+    width: 350px; height: 350px;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(41,121,255,0.05) 0%, transparent 70%);
+    animation: orb-drift 28s ease-in-out infinite;
+  }
+
+  /* LINHA SCAN */
+  .scanline {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(41,121,255,0.15), transparent);
+    pointer-events: none;
+    z-index: 9990;
+    animation: scanline 8s linear infinite;
+    opacity: 0.5;
   }
 
   /* SCROLL REVEAL */
@@ -1022,7 +1170,7 @@
   }
   .nav-drawer .drawer-cta:hover { background: #1560e0; }
 
-  /* ── MOBILE NAV ICON (shown only on mobile) ── */
+  /* ── MOBILE NAV ICON (SÓ MOBILE) ── */
   .logo-icon-mobile {
     display: none;
     width: 30px; height: 30px;
@@ -1214,7 +1362,7 @@
     }
   }
 
-  /* ── SMALL PHONES (≤ 480px) ── */
+  /* ── SELOLA PEQUENO (≤ 480px) ── */
   @media (max-width: 480px) {
     nav {
       width: calc(100% - 24px);
@@ -1261,7 +1409,7 @@
     opacity: 1;
   }
 
-  /* ── WHATSAPP BUTTON ── */
+  /* ── BOTÃO ZAP ── */
   .btn-whatsapp {
     background: var(--blue);
     color: #fff;
@@ -1301,7 +1449,7 @@
     background: var(--blue);
   }
 
-  /* ── NAV CTA BUTTON ── */
+  /* ── NAV CTA BOTÃO ── */
   .nav-cta {
     position: relative;
     overflow: hidden;
@@ -1329,7 +1477,7 @@
     color: #fff;
   }
 
-  /* ── CTA TITLE GLOW ── */
+  /* ── CTA TITULO GLOW ── */
   .cta-title .outline {
     color: transparent;
     -webkit-text-stroke: 0.1px rgba(41, 121, 255, 0.9);
@@ -1344,10 +1492,235 @@
     50%       { filter: drop-shadow(0 0 32px rgba(41, 121, 255, 0.85)) drop-shadow(0 0 70px rgba(41, 121, 255, 0.45)); }
   }
 
+  /* ══════════════════════════════════════════
+     1. NOISE / GRAIN OVERLAY - PREMIUM
+  ══════════════════════════════════════════ */
+  #grain-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9995;
+    opacity: 0.038;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-size: 200px 200px;
+    animation: grain-shift 0.15s steps(1) infinite;
+  }
+  @keyframes grain-shift {
+    0%   { transform: translate(0px, 0px); }
+    10%  { transform: translate(-2px, 1px); }
+    20%  { transform: translate(2px, -2px); }
+    30%  { transform: translate(-1px, 2px); }
+    40%  { transform: translate(3px, -1px); }
+    50%  { transform: translate(-2px, 3px); }
+    60%  { transform: translate(1px, -3px); }
+    70%  { transform: translate(-3px, 1px); }
+    80%  { transform: translate(2px, 2px); }
+    90%  { transform: translate(-1px, -2px); }
+    100% { transform: translate(0px, 0px); }
+  }
+
+  /* ══════════════════════════════════════════
+     2. MAGNETIC BUTTONS - PREMIUM
+  ══════════════════════════════════════════ */
+  .btn-magnetic {
+    position: relative;
+    transition: box-shadow 0.3s, transform 0.12s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: transform;
+  }
+
+  /* ══════════════════════════════════════════
+     3. ANIMATED PRICE COUNTER - PREMIUM
+  ══════════════════════════════════════════ */
+  .price-counter {
+    display: inline-block;
+    font-variant-numeric: tabular-nums;
+  }
+  .pkg-price-value .price-counter,
+  .service-price .price-counter {
+    display: inline;
+  }
+  /* CONTADOR DE PREÇO */
+  @keyframes price-flicker {
+    0%, 100% { opacity: 1; }
+    25% { opacity: 0.; }
+    50% { opacity: 0.9; }
+    75% { opacity: 0.5; }
+  }
+  .counting { animation: price-flicker 1s linear 0s 8; }
+
+  /* ══════════════════════════════════════════
+     4. HOVER TILT 3D - CARDS - PREMIUM
+  ══════════════════════════════════════════ */
+  .service-card,
+  .package-card,
+  .segment-card,
+  .step {
+    transform-style: preserve-3d;
+    transition: background 0.3s, box-shadow 0.3s, transform 0.08s cubic-bezier(0.23, 1, 0.32, 1);
+    will-change: transform;
+  }
+  /* Override package-card */
+  .package-card:hover {
+    transform: none; 
+  }
+
+  /* ══════════════════════════════════════════
+     5. Cursor muda com o contexto - PREMIUM
+  ══════════════════════════════════════════ */
+  /* botao contexto */
+  body.cursor-btn .cursor {
+    width: 48px; height: 48px;
+    background: transparent;
+    border: 1.5px solid var(--blue);
+    mix-blend-mode: normal;
+  }
+  body.cursor-btn .cursor-ring {
+    width: 8px; height: 8px;
+    border-color: var(--blue);
+    opacity: 0.5;
+  }
+  /* Card/hover contexto */
+  body.cursor-card .cursor {
+    width: 60px; height: 60px;
+    background: rgba(41,121,255,0.08);
+    border: 1px solid rgba(41,121,255,0.4);
+    border-radius: 4px;
+  }
+  body.cursor-card .cursor-ring {
+    opacity: 0;
+  }
+  /* Link contexto */
+  body.cursor-link .cursor {
+    width: 6px; height: 6px;
+    background: var(--blue-light);
+  }
+  body.cursor-link .cursor-ring {
+    width: 28px; height: 28px;
+    border-color: var(--blue-light);
+  }
+  /* Texto contexto */
+  body.cursor-text .cursor {
+    width: 2px; height: 28px;
+    border-radius: 1px;
+    background: var(--blue-light);
+    opacity: 0.8;
+  }
+  body.cursor-text .cursor-ring {
+    opacity: 0;
+  }
+
+  /* ══════════════════════════════════════════
+     6. STEP NUMBERS COM CONNECTOR LINE
+  ══════════════════════════════════════════ */
+  .process-steps {
+    position: relative;
+  }
+  /* A linha de conexão fica acima da grade escalonada. */
+  .steps-connector {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    position: relative;
+    margin-bottom: -1px;
+    pointer-events: none;
+    padding: 0 12px;
+  }
+  .steps-connector-inner {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    padding: 0 36px;
+    height: 40px;
+    position: relative;
+  }
+  /* Linha Horizontal */
+  .connector-line {
+    position: absolute;
+    top: 50%; left: 72px; right: 72px;
+    height: 1px;
+    background: linear-gradient(90deg,
+      transparent,
+      rgba(41,121,255,0.2) 8%,
+      rgba(41,121,255,0.4) 30%,
+      rgba(41,121,255,0.4) 70%,
+      rgba(41,121,255,0.2) 92%,
+      transparent
+    );
+    transform: translateY(-50%);
+  }
+  /* Ponto luminoso animado que percorre a linha */
+  .connector-dot {
+    position: absolute;
+    top: 50%; left: 72px;
+    width: 6px; height: 6px;
+    background: var(--blue);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 12px var(--blue), 0 0 24px rgba(41,121,255,0.5);
+    animation: dot-travel 4s ease-in-out infinite;
+  }
+  @keyframes dot-travel {
+    0%   { left: 72px; opacity: 0; }
+    5%   { opacity: 1; }
+    95%  { opacity: 1; }
+    100% { left: calc(100% - 72px); opacity: 0; }
+  }
+  /* Redesign dos numeros dos cards*/
+  .step-num {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 52px; height: 52px;
+    border: 1px solid rgba(41,121,255,0.35);
+    border-radius: 50%;
+    background: rgba(41,121,255,0.06);
+    font-family: var(--font-mono);
+    font-size: 14px !important;
+    letter-spacing: 1px;
+    color: var(--blue-light);
+    margin-bottom: 24px;
+    transition: border-color 0.3s, background 0.3s, box-shadow 0.3s, color 0.3s;
+  }
+  .step:hover .step-num {
+    border-color: var(--blue);
+    background: rgba(41,121,255,0.14);
+    box-shadow: 0 0 20px rgba(41,121,255,0.3);
+    color: var(--white);
+  }
+  /* Anel numerico */
+  .step-num::after {
+    content: '';
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 1px solid rgba(41,121,255,0.15);
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .step:hover .step-num::after { opacity: 1; }
+
+  /* mobile */
+  @media (max-width: 768px) {
+    .steps-connector { display: none; }
+    .step-num { font-size: 14px !important; width: 44px; height: 44px; }
+  }
+  @media (max-width: 480px) {
+    .step-num { width: 40px; height: 40px; font-size: 13px !important; }
+  }
 
 </style>
 </head>
 <body>
+
+<canvas id="particleCanvas"></canvas>
+<div id="mouseLight"></div>
+<div id="grain-overlay"></div>
+<div class="bg-orbs">
+  <div class="bg-orb bg-orb-1"></div>
+  <div class="bg-orb bg-orb-2"></div>
+  <div class="bg-orb bg-orb-3"></div>
+</div>
+<div class="scanline"></div>
 
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
@@ -1387,7 +1760,9 @@
 
   <div class="hero-left">
     <div class="hero-tag">WebDesign & Desenvolvimento Digital</div>
-    <h1 class="hero-h1">
+    <h1 class="hero-h1" data-text="SITES
+QUE
+VENDEM.">
       SITES<br>
       QUE<br>
       <span>VENDEM.</span>
@@ -1397,7 +1772,7 @@
     </p>
     </h1>
     <div class="hero-actions">
-      <a href="#pacotes" class="btn-primary">Ver Pacotes</a>
+      <a href="#pacotes" class="btn-primary btn-magnetic">Ver Pacotes</a>
       <a href="#servicos" class="btn-ghost">Nossos serviços</a>
     </div>
   </div>
@@ -1425,7 +1800,7 @@
 <!-- MARQUEE -->
 <div class="marquee-section">
   <div class="marquee-track"> 
-    <!-- duplicated for seamless loop -->
+    <!-- duplicado para o loop -->
     <div class="marquee-item">Design de Interface <span class="marquee-dot"></span></div>
     <div class="marquee-item">Desenvolvimento Web <span class="marquee-dot"></span></div>
     <div class="marquee-item">E-commerce <span class="marquee-dot"></span></div>
@@ -1441,7 +1816,7 @@
   </div>
 </div>
 
-<!-- SERVICES -->
+<!-- SERVICOS -->
 <section class="section" id="servicos">
   <div class="section-label reveal">O que fazemos</div>
   <h2 class="section-title reveal">NOSSOS<br>SERVIÇOS</h2>
@@ -1451,7 +1826,7 @@
       <div class="service-num">01</div>
       <div class="service-name">SITES AVULSOS</div>
       <p class="service-desc">Sites institucionais, portfólios e páginas de vendas e agendamentos. Cada projeto é único, pensado para o seu negócio.</p>
-      <div class="service-price">A partir de R$ 890</div>
+      <div class="service-price">A partir de R$ <span class="price-counter" data-target="890" data-suffix="">890</span></div>
       <div class="service-arrow">↗</div>
     </div>
 
@@ -1459,7 +1834,7 @@
       <div class="service-num">02</div>
       <div class="service-name">E-COMMERCE</div>
       <p class="service-desc">Lojas virtuais completas com WooCommerce ou Shopify. Integração com pagamento, estoque e logística.</p>
-      <div class="service-price">A partir de R$ 1.890</div>
+      <div class="service-price">A partir de R$ <span class="price-counter" data-target="1890" data-suffix="">1.890</span></div>
       <div class="service-arrow">↗</div>
     </div>
 
@@ -1467,7 +1842,7 @@
       <div class="service-num">03</div>
       <div class="service-name">LANDING PAGES</div>
       <p class="service-desc">Páginas de conversão de alto impacto para campanhas, lançamentos e captação de leads.</p>
-      <div class="service-price">A partir de R$ 500</div>
+      <div class="service-price">A partir de R$ <span class="price-counter" data-target="500" data-suffix="">500</span></div>
       <div class="service-arrow">↗</div>
     </div>
 
@@ -1475,7 +1850,7 @@
       <div class="service-num">04</div>
       <div class="service-name">UI/UX DESIGN</div>
       <p class="service-desc">Design de interfaces e experiências do usuário. Wireframes, protótipos e design system completo.</p>
-      <div class="service-price">A partir de R$ 1.200</div>
+      <div class="service-price">A partir de R$ <span class="price-counter" data-target="1200" data-suffix="">1.200</span></div>
       <div class="service-arrow">↗</div>
     </div>
 
@@ -1483,7 +1858,7 @@
       <div class="service-num">05</div>
       <div class="service-name">MANUTENÇÃO</div>
       <p class="service-desc">Suporte contínuo, atualizações de segurança, backups e pequenas melhorias mensais.</p>
-      <div class="service-price">A partir de R$ 190/mês</div>
+      <div class="service-price">A partir de R$ <span class="price-counter" data-target="190" data-suffix="/mês">190/mês</span></div>
       <div class="service-arrow">↗</div>
     </div>
 
@@ -1491,13 +1866,13 @@
       <div class="service-num">06</div>
       <div class="service-name">SEO & TRÁFEGO</div>
       <p class="service-desc">Otimização para buscadores, performance técnica e estratégia de conteúdo para crescer organicamente.</p>
-      <div class="service-price">A partir de R$ 450/mês</div>
+      <div class="service-price">A partir de R$ <span class="price-counter" data-target="450" data-suffix="/mês">450/mês</span></div>
       <div class="service-arrow">↗</div>
     </div>
   </div>
 </section>
 
-<!-- PACKAGES -->
+<!-- PACOTES -->
 <section class="packages-section" id="pacotes">
   <div class="section-label reveal">Escolha seu objetivo</div>
   <h2 class="section-title reveal">PACOTES POR<br>OBJETIVO</h2>
@@ -1509,7 +1884,7 @@
       <div class="pkg-objective">Objetivo</div>
       <div class="pkg-name">PRESENÇA DIGITAL</div>
       <p class="pkg-tagline">Para quem precisa existir profissionalmente online e transmitir credibilidade.</p>
-      <div class="pkg-price"><span class="pkg-price-label">A partir de</span><span class="pkg-price-value">R$ 990</span></div>
+      <div class="pkg-price"><span class="pkg-price-label">A partir de</span><span class="pkg-price-value">R$ <span class="price-counter" data-target="990" data-suffix="">990</span></span></div>
 
       <div class="pkg-block-title">O que inclui</div>
       <ul class="pkg-list">
@@ -1529,7 +1904,7 @@
       </ul>
 
       <div class="pkg-cta-wrap">
-        <a href="#contato" class="pkg-btn pkg-btn-outline">Quero isso</a>
+        <a href="#contato" class="pkg-btn pkg-btn-outline btn-magnetic">Quero isso</a>
       </div>
     </div>
 
@@ -1538,7 +1913,7 @@
       <div class="pkg-objective">Objetivo</div>
       <div class="pkg-name">CAPTAÇÃO DE CLIENTES</div>
       <p class="pkg-tagline">Para quem precisa gerar contatos qualificados e converter visitantes em leads.</p>
-      <div class="pkg-price"><span class="pkg-price-label">A partir de</span><span class="pkg-price-value">R$ 1.290</span></div>
+      <div class="pkg-price"><span class="pkg-price-label">A partir de</span><span class="pkg-price-value">R$ <span class="price-counter" data-target="1290" data-suffix="">1.290</span></span></div>
 
       <div class="pkg-block-title">O que inclui</div>
       <ul class="pkg-list">
@@ -1557,7 +1932,7 @@
       </ul>
 
       <div class="pkg-cta-wrap">
-        <a href="#contato" class="pkg-btn pkg-btn-outline">Quero isso</a>
+        <a href="#contato" class="pkg-btn pkg-btn-outline btn-magnetic">Quero isso</a>
       </div>
     </div>
 
@@ -1566,7 +1941,7 @@
       <div class="pkg-objective">Objetivo</div>
       <div class="pkg-name">OPERAÇÃO DIGITAL</div>
       <p class="pkg-tagline">Para quem precisa automatizar processos e reduzir trabalho manual no dia a dia.</p>
-      <div class="pkg-price"><span class="pkg-price-label">A partir de</span><span class="pkg-price-value">R$ 2.490</span></div>
+      <div class="pkg-price"><span class="pkg-price-label">A partir de</span><span class="pkg-price-value">R$ <span class="price-counter" data-target="2490" data-suffix="">2.490</span></span></div>
 
       <div class="pkg-block-title">O que inclui</div>
       <ul class="pkg-list">
@@ -1586,7 +1961,7 @@
       </ul>
 
       <div class="pkg-cta-wrap">
-        <a href="#contato" class="pkg-btn pkg-btn-outline">Quero isso</a>
+        <a href="#contato" class="pkg-btn pkg-btn-outline btn-magnetic">Quero isso</a>
       </div>
     </div>
 
@@ -1595,7 +1970,7 @@
       <div class="pkg-objective">Objetivo</div>
       <div class="pkg-name">LOJA VIRTUAL</div>
       <p class="pkg-tagline">Para quem quer vender produtos online sem depender só do Instagram ou marketplace.</p>
-      <div class="pkg-price"><span class="pkg-price-label">A partir de</span><span class="pkg-price-value">R$ 1.890</span></div>
+      <div class="pkg-price"><span class="pkg-price-label">A partir de</span><span class="pkg-price-value">R$ <span class="price-counter" data-target="1890" data-suffix="">1.890</span></span></div>
 
       <div class="pkg-block-title">O que inclui</div>
       <ul class="pkg-list">
@@ -1615,7 +1990,7 @@
       </ul>
 
       <div class="pkg-cta-wrap">
-        <a href="#contato" class="pkg-btn pkg-btn-outline">Quero isso</a>
+        <a href="#contato" class="pkg-btn pkg-btn-outline btn-magnetic">Quero isso</a>
       </div>
     </div>
 
@@ -1624,7 +1999,7 @@
       <div class="pkg-objective">Objetivo</div>
       <div class="pkg-name">AUTORIDADE DE MARCA</div>
       <p class="pkg-tagline">Para quem quer ser referência no segmento e construir reputação digital sólida.</p>
-      <div class="pkg-price"><span class="pkg-price-label">A partir de</span><span class="pkg-price-value">R$ 3.490</span></div>
+      <div class="pkg-price"><span class="pkg-price-label">A partir de</span><span class="pkg-price-value">R$ <span class="price-counter" data-target="3490" data-suffix="">3.490</span></span></div>
 
       <div class="pkg-block-title">O que inclui</div>
       <ul class="pkg-list">
@@ -1643,7 +2018,7 @@
       </ul>
 
       <div class="pkg-cta-wrap">
-        <a href="#contato" class="pkg-btn pkg-btn-outline">Quero isso</a>
+        <a href="#contato" class="pkg-btn pkg-btn-outline btn-magnetic">Quero isso</a>
       </div>
     </div>
 
@@ -1652,7 +2027,7 @@
       <div class="pkg-objective">Objetivo</div>
       <div class="pkg-name">CARDÁPIO & PEDIDOS</div>
       <p class="pkg-tagline">Para quem quer parar de depender do iFood e ter canal direto com o cliente.</p>
-      <div class="pkg-price"><span class="pkg-price-label">A partir de</span><span class="pkg-price-value">R$ 1.490</span></div>
+      <div class="pkg-price"><span class="pkg-price-label">A partir de</span><span class="pkg-price-value">R$ <span class="price-counter" data-target="1490" data-suffix="">1.490</span></span></div>
 
       <div class="pkg-block-title">O que inclui</div>
       <ul class="pkg-list">
@@ -1672,7 +2047,7 @@
       </ul>
 
       <div class="pkg-cta-wrap">
-        <a href="#contato" class="pkg-btn pkg-btn-outline">Quero isso</a>
+        <a href="#contato" class="pkg-btn pkg-btn-outline btn-magnetic">Quero isso</a>
       </div>
     </div>
 
@@ -1790,6 +2165,13 @@
   <div class="section-label reveal">Como funciona</div>
   <h2 class="section-title reveal">O PROCESSO</h2>
 
+  <div class="steps-connector">
+    <div class="steps-connector-inner">
+      <div class="connector-line"></div>
+      <div class="connector-dot"></div>
+    </div>
+  </div>
+
   <div class="process-steps">
     <div class="step reveal">
       <div class="step-num">01</div>
@@ -1823,7 +2205,7 @@
   </h2>
   <p class="cta-sub reveal">Pronto para ter um site que trabalha por você? Fala com a gente! Resposta imediata.</p>
   <div class="cta-actions reveal">
-    <a href="https://wa.me/5567992124508" class="btn-whatsapp btn-primary">Chamar no WhatsApp</a>
+    <a href="https://wa.me/5567992124508" class="btn-whatsapp btn-primary btn-magnetic">Chamar no WhatsApp</a>
     <a href="mailto:kpz.contato@gmail.com" class="btn-ghost">Enviar e-mail</a>
   </div>
 </section>
@@ -1857,11 +2239,232 @@
   }
   animRing();
 
+  // ── MOUSE LIGHT ──
+  const mouseLight = document.getElementById('mouseLight');
+  let mlx = window.innerWidth / 2, mly = window.innerHeight / 2;
+  let tlx = mlx, tly = mly;
+
+  document.addEventListener('mousemove', e => {
+    tlx = e.clientX; tly = e.clientY;
+  });
+
+  function animMouseLight() {
+    mlx += (tlx - mlx) * 0.05;
+    mly += (tly - mly) * 0.05;
+    mouseLight.style.left = mlx + 'px';
+    mouseLight.style.top = mly + 'px';
+    requestAnimationFrame(animMouseLight);
+  }
+  animMouseLight();
+
+  // ── CURSOR TRAIL ──
+  const TRAIL_COUNT = 12;
+  const trail = [];
+  for (let i = 0; i < TRAIL_COUNT; i++) {
+    const el = document.createElement('div');
+    el.className = 'cursor-trail';
+    const scale = 1 - i * 0.07;
+    el.style.cssText = `width:${5 * scale}px;height:${5 * scale}px;opacity:${(1 - i / TRAIL_COUNT) * 0.5};`;
+    document.body.appendChild(el);
+    trail.push({ el, x: 0, y: 0 });
+  }
+
+  const trailPositions = [];
+  document.addEventListener('mousemove', e => {
+    trailPositions.unshift({ x: e.clientX, y: e.clientY });
+    if (trailPositions.length > TRAIL_COUNT * 3) trailPositions.pop();
+  });
+
+  function animTrail() {
+    trail.forEach((t, i) => {
+      const pos = trailPositions[i * 2] || trailPositions[trailPositions.length - 1];
+      if (pos) {
+        t.x += (pos.x - t.x) * 0.25;
+        t.y += (pos.y - t.y) * 0.25;
+        t.el.style.left = t.x + 'px';
+        t.el.style.top = t.y + 'px';
+        t.el.style.opacity = (1 - i / TRAIL_COUNT) * 0.45;
+      }
+    });
+    requestAnimationFrame(animTrail);
+  }
+  animTrail();
+
+  // ── PARTICLE SYSTEM ──
+  const canvas = document.getElementById('particleCanvas');
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const COLORS = ['rgba(41,121,255,', 'rgba(130,177,255,', 'rgba(80,150,255,'];
+
+  class Particle {
+    constructor() { this.reset(true); }
+    reset(initial = false) {
+      this.x = Math.random() * canvas.width;
+      this.y = initial ? Math.random() * canvas.height : canvas.height + 10;
+      this.vx = (Math.random() - 0.5) * 0.4;
+      this.vy = -(Math.random() * 0.5 + 0.1);
+      this.radius = Math.random() * 1.8 + 0.3;
+      this.alpha = Math.random() * 0.6 + 0.1;
+      this.life = 0;
+      this.maxLife = Math.random() * 400 + 200;
+      this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
+      this.pulse = Math.random() * Math.PI * 2;
+      this.pulseSpeed = 0.02 + Math.random() * 0.02;
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      this.life++;
+      this.pulse += this.pulseSpeed;
+      const progress = this.life / this.maxLife;
+      this.currentAlpha = this.alpha * Math.sin(progress * Math.PI) * (0.8 + 0.2 * Math.sin(this.pulse));
+      if (this.life >= this.maxLife) this.reset();
+    }
+    draw() {
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = this.color + this.currentAlpha + ')';
+      ctx.shadowBlur = 8;
+      ctx.shadowColor = this.color + '0.5)';
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  // Noulos brilhantes
+  class GlowNode {
+    constructor() { this.reset(true); }
+    reset(initial = false) {
+      this.x = Math.random() * canvas.width;
+      this.y = initial ? Math.random() * canvas.height : Math.random() * canvas.height;
+      this.vx = (Math.random() - 0.5) * 0.15;
+      this.vy = (Math.random() - 0.5) * 0.15;
+      this.radius = Math.random() * 2 + 1;
+      this.alpha = Math.random() * 0.5 + 0.2;
+      this.pulse = Math.random() * Math.PI * 2;
+      this.pulseSpeed = 0.01 + Math.random() * 0.015;
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      this.pulse += this.pulseSpeed;
+      if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+      if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+      this.currentAlpha = this.alpha * (0.6 + 0.4 * Math.sin(this.pulse));
+    }
+    draw() {
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(41,121,255,${this.currentAlpha})`;
+      ctx.shadowBlur = 16;
+      ctx.shadowColor = 'rgba(41,121,255,0.6)';
+      ctx.fill();
+      ctx.restore();
+    }
+  }
+
+  const particles = Array.from({ length: 120 }, () => new Particle());
+  const glowNodes = Array.from({ length: 40 }, () => new GlowNode());
+
+  // Linhas de conexão 
+  function drawConnections() {
+    const maxDist = 180;
+    for (let i = 0; i < glowNodes.length; i++) {
+      for (let j = i + 1; j < glowNodes.length; j++) {
+        const a = glowNodes[i], b = glowNodes[j];
+        const dx = a.x - b.x, dy = a.y - b.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < maxDist) {
+          const alpha = (1 - dist / maxDist) * 0.15;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.strokeStyle = `rgba(41,121,255,${alpha})`;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+  }
+
+  // Mouse sparkle 
+  let lastBurstTime = 0;
+  const sparkles = [];
+
+  class Sparkle {
+    constructor(x, y) {
+      this.x = x; this.y = y;
+      const angle = Math.random() * Math.PI * 2;
+      const speed = Math.random() * 2 + 0.5;
+      this.vx = Math.cos(angle) * speed;
+      this.vy = Math.sin(angle) * speed - 1;
+      this.life = 0;
+      this.maxLife = 30 + Math.random() * 20;
+      this.radius = Math.random() * 2 + 0.5;
+    }
+    update() {
+      this.x += this.vx;
+      this.y += this.vy;
+      this.vy += 0.05;
+      this.life++;
+    }
+    draw() {
+      const progress = 1 - this.life / this.maxLife;
+      ctx.save();
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.radius * progress, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(130,177,255,${progress * 0.8})`;
+      ctx.shadowBlur = 6;
+      ctx.shadowColor = 'rgba(41,121,255,0.6)';
+      ctx.fill();
+      ctx.restore();
+    }
+    isDead() { return this.life >= this.maxLife; }
+  }
+
+  document.addEventListener('mousemove', e => {
+    const now = Date.now();
+    if (now - lastBurstTime > 60) {
+      for (let i = 0; i < 2; i++) sparkles.push(new Sparkle(e.clientX, e.clientY));
+      lastBurstTime = now;
+    }
+  });
+
+  // Click burst
+  document.addEventListener('click', e => {
+    for (let i = 0; i < 18; i++) sparkles.push(new Sparkle(e.clientX, e.clientY));
+  });
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    drawConnections();
+    particles.forEach(p => { p.update(); p.draw(); });
+    glowNodes.forEach(g => { g.update(); g.draw(); });
+
+    for (let i = sparkles.length - 1; i >= 0; i--) {
+      sparkles[i].update();
+      sparkles[i].draw();
+      if (sparkles[i].isDead()) sparkles.splice(i, 1);
+    }
+
+    requestAnimationFrame(animate);
+  }
+  animate();
+
   // ── GLASS CURSOR GLOW ──
   const glassCards = document.querySelectorAll('.service-card, .package-card, .segment-card, .step');
 
   glassCards.forEach(card => {
-    // Inject overlay div
     const overlay = document.createElement('div');
     overlay.className = 'glass-glow-overlay';
     card.appendChild(overlay);
@@ -1879,7 +2482,7 @@
     });
   });
 
-  // ── NAV CTA — fill from cursor entry side ──
+  // ── NAV CTA — preencher a partir do lado de entrada do cursor ──
   const navCta = document.getElementById('navCta');
   if (navCta) {
     navCta.addEventListener('mouseenter', e => {
@@ -1889,7 +2492,7 @@
     });
   }
 
-  // ── WHATSAPP BUTTON — fill from cursor entry side ──
+  // ── WHATSAPP BUTTON — preencher a partir do lado de entrada do cursor ──
   const waBtn = document.querySelector('.btn-whatsapp');
   if (waBtn) {
     waBtn.addEventListener('mouseenter', e => {
@@ -1908,14 +2511,12 @@
       const isOpen = hamburger.classList.toggle('open');
       drawer.classList.toggle('open', isOpen);
     });
-    // Fechar ao clicar em qualquer link do drawer
     drawer.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
         hamburger.classList.remove('open');
         drawer.classList.remove('open');
       });
     });
-    // Fechar ao clicar fora
     document.addEventListener('click', e => {
       if (!hamburger.contains(e.target) && !drawer.contains(e.target)) {
         hamburger.classList.remove('open');
@@ -1923,7 +2524,6 @@
       }
     });
   }
-
 
   const reveals = document.querySelectorAll('.reveal');
   const observer = new IntersectionObserver(entries => {
@@ -1934,6 +2534,175 @@
     });
   }, { threshold: 0.1 });
   reveals.forEach(el => observer.observe(el));
+
+  // ══════════════════════════════════════════
+  // 1. BOTOES MAGNETICOS
+  // ══════════════════════════════════════════
+  document.querySelectorAll('.btn-magnetic').forEach(btn => {
+    const STRENGTH = 0.38;
+    let raf = null;
+    let targetX = 0, targetY = 0, currentX = 0, currentY = 0;
+
+    btn.addEventListener('mouseenter', () => {
+      function lerp() {
+        currentX += (targetX - currentX) * 0.18;
+        currentY += (targetY - currentY) * 0.18;
+        btn.style.transform = `translate(${currentX}px, ${currentY}px)`;
+        if (Math.abs(targetX - currentX) > 0.01 || Math.abs(targetY - currentY) > 0.01) {
+          raf = requestAnimationFrame(lerp);
+        }
+      }
+
+      btn.addEventListener('mousemove', onMove);
+      function onMove(e) {
+        const rect = btn.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        targetX = (e.clientX - cx) * STRENGTH;
+        targetY = (e.clientY - cy) * STRENGTH;
+        cancelAnimationFrame(raf);
+        raf = requestAnimationFrame(lerp);
+      }
+
+      btn._onMove = onMove;
+    });
+
+    btn.addEventListener('mouseleave', () => {
+      btn.removeEventListener('mousemove', btn._onMove);
+      targetX = 0; targetY = 0;
+      function snap() {
+        currentX += (0 - currentX) * 0.15;
+        currentY += (0 - currentY) * 0.15;
+        btn.style.transform = `translate(${currentX}px, ${currentY}px)`;
+        if (Math.abs(currentX) > 0.1 || Math.abs(currentY) > 0.1) {
+          raf = requestAnimationFrame(snap);
+        } else {
+          btn.style.transform = '';
+        }
+      }
+      snap();
+    });
+  });
+
+  // ══════════════════════════════════════════
+  // 2. CONTADOR DE PREÇO ANIMADO
+  // ══════════════════════════════════════════
+  function animateCounter(el) {
+    const target = parseInt(el.dataset.target, 10);
+    const suffix = el.dataset.suffix || '';
+    const duration = 1250;
+    const start = performance.now();
+
+    function fmt(n) {
+      return n.toLocaleString('pt-BR');
+    }
+
+    el.classList.add('counting');
+    function tick(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.floor(eased * target);
+      el.textContent = 'R$ ' + fmt(current) + suffix;
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+      } else {
+        el.textContent = 'R$ ' + fmt(target) + suffix;
+        el.classList.remove('counting');
+      }
+    }
+    requestAnimationFrame(tick);
+  }
+
+  const priceObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !e.target.dataset.counted) {
+        e.target.dataset.counted = '1';
+        animateCounter(e.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.price-counter').forEach(el => priceObserver.observe(el));
+
+  // ══════════════════════════════════════════
+  // 3. HOVER TILT 3D CARDS
+  // ══════════════════════════════════════════
+  const tiltCards = document.querySelectorAll('.service-card, .package-card, .segment-card, .step');
+
+  tiltCards.forEach(card => {
+    const TILT_MAX = 8; 
+    let tiltRaf = null;
+    let tX = 0, tY = 0, cX = 0, cY = 0;
+
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      const xRel = (e.clientX - rect.left) / rect.width - 0.5;  
+      const yRel = (e.clientY - rect.top) / rect.height - 0.5;
+      tX = -yRel * TILT_MAX;
+      tY = xRel * TILT_MAX;
+
+      cancelAnimationFrame(tiltRaf);
+      function animTilt() {
+        cX += (tX - cX) * 0.15;
+        cY += (tY - cY) * 0.15;
+        card.style.transform = `perspective(800px) rotateX(${cX}deg) rotateY(${cY}deg) translateZ(4px)`;
+        if (Math.abs(tX - cX) > 0.05 || Math.abs(tY - cY) > 0.05) {
+          tiltRaf = requestAnimationFrame(animTilt);
+        }
+      }
+      animTilt();
+    });
+
+    card.addEventListener('mouseleave', () => {
+      tX = 0; tY = 0;
+      function resetTilt() {
+        cX += (0 - cX) * 0.12;
+        cY += (0 - cY) * 0.12;
+        card.style.transform = `perspective(800px) rotateX(${cX}deg) rotateY(${cY}deg)`;
+        if (Math.abs(cX) > 0.02 || Math.abs(cY) > 0.02) {
+          tiltRaf = requestAnimationFrame(resetTilt);
+        } else {
+          card.style.transform = '';
+        }
+      }
+      resetTilt();
+    });
+  });
+
+  // ══════════════════════════════════════════
+  // 4. CURSOR MUDA COM O CONTEXTO
+  // ══════════════════════════════════════════
+  const bodyEl = document.body;
+
+  function setCursorContext(ctx) {
+    bodyEl.classList.remove('cursor-btn', 'cursor-card', 'cursor-link', 'cursor-text');
+    if (ctx) bodyEl.classList.add('cursor-' + ctx);
+  }
+
+  // BOTOES
+  document.querySelectorAll('.btn-primary, .btn-whatsapp, .pkg-btn, .nav-cta, .nav-hamburger').forEach(el => {
+    el.addEventListener('mouseenter', () => setCursorContext('btn'));
+    el.addEventListener('mouseleave', () => setCursorContext(null));
+  });
+
+  // CARDS
+  document.querySelectorAll('.service-card, .package-card, .segment-card, .step').forEach(el => {
+    el.addEventListener('mouseenter', () => setCursorContext('card'));
+    el.addEventListener('mouseleave', () => setCursorContext(null));
+  });
+
+  // Nav links & ghost buttons
+  document.querySelectorAll('.nav-links a, .btn-ghost, .footer-links a').forEach(el => {
+    el.addEventListener('mouseenter', () => setCursorContext('link'));
+    el.addEventListener('mouseleave', () => setCursorContext(null));
+  });
+
+  // Areas de Texto
+  document.querySelectorAll('p, .service-desc, .step-desc, .pkg-tagline, .hero-sub, .cta-sub').forEach(el => {
+    el.addEventListener('mouseenter', () => setCursorContext('text'));
+    el.addEventListener('mouseleave', () => setCursorContext(null));
+  }); //desenvolvido por Tiago Brittes - Kirin Co.
 </script>
 </body>
 </html>
